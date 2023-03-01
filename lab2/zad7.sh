@@ -14,3 +14,19 @@
 #(fibonaci1 (1))+ (fibonaci1 (0)) + (fibonaci1 (0)) + (fibonaci1 (1)) +(fibonaci1 (1)) = 1 + 0 + 0 + 1 + 1
 
 #b
+(define (fibonaci_helper n i acc1 acc2)
+    (cond
+        ((not (= n i)) (cond
+            ((= n 1) acc2)
+            ((= n 0) acc1)
+            (else (fibonaci_helper n (+ i 1) acc2 (+ acc1 acc2)))
+        ))
+        (else acc2)
+    )
+)
+
+(define (fibonaci2 n)
+    (fibonaci_helper n 1 0 1)
+)
+
+(fibonaci2 4)
