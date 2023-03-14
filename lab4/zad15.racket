@@ -1,0 +1,1 @@
+comb zwraca funkcje lambda, która w naszym wypadku zwraca (square (double x)), co wynosi 100 dla x=5.

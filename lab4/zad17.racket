@@ -1,0 +1,11 @@
+(define (append l m)
+    (if (eq? null l)
+
+    )
+)
+
+(define (append_helper l m acc)
+    (if (eq? null l)
+        
+    )
+)

@@ -1,0 +1,18 @@
+(define (iter f n)
+    (if (> n 1)
+        (f (iter f (- n 1)))
+        (lambda (x) (f x))
+    )
+)
+
+(define (iter_help f n x)
+    (if (> n 0)
+        (iter (lambda (x) (f x)) (- n 1))
+        (lambda (x) (f x))
+    )
+)
+#nie dziala
+
+((iter square 3) 3)
+(square (square (lambda (3) (square 3))))
+
