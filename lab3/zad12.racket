@@ -1,0 +1,43 @@
+(define (filter-accumulate pred combiner null-value term a next b)
+    (if (> a b)
+        null-value
+        (cond
+            ((pred a) 
+                (combiner (term a) (filter-accumulate pred combiner null-value term (next a) next b)))
+            (else (combiner null-value (filter-accumulate pred combiner null-value term (next a) next b)))
+        )))
+        
+#1 sum of squares of the prime numbers in the interval [a,b]
+#function prime:
+    (define (prime x)
+        (prime-helper 1 x))
+
+    (define (prime-helper n x)
+        (if (> n x)
+            #f
+            (cond
+                ((integer? (/ x n)) 
+                    (cond
+                        ((= n x) #t)
+                        ((= n 1) (prime-helper (+ n 1) x))
+                        (else #f)
+                    )
+                )
+                (else (prime-helper (+ n 1) x))
+            )
+        )
+    )
+
+(define (sum_of_squares a b)
+    (filter-accumulate prime (lambda (x y) (+ x y)) 0 (lambda (z) (* z z)) a (lambda (x) (+ x 1)) b))
+
+#(sum_of_squares 1 5) 39
+#(sum_of_squares 1 4) 14
+
+#2 product of the natural numbers i smaller than n for which nwd(i,n) = 1.
+
+(define (naturalproduct b)
+    (filter-accumulate (lambda (x) (= 1 (gcd x b))) (lambda (x y) (* x y)) 1 (lambda (z) z) 1 (lambda (x) (+ x 1)) b))
+
+#(naturalproduct 5) 24
+#(naturalproduct 6) 5

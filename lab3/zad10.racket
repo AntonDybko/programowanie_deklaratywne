@@ -1,0 +1,12 @@
+(define (product term next a b)
+  (if (> a b)
+      1
+      (* (term a) (product term next (next a) b))))
+
+#1 silnia
+(define (identity x) x)
+(define (increment x) (+ x 1))
+#(product identity increment 1 5) return 5!=120
+
+2# approximation of p using the formula   p/4 = 2 · 4 · 4 · 6 · 6 · 8 ··· / 3 · 3 · 5 · 5 · 7 · 7 ··· .
+...
