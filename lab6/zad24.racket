@@ -1,0 +1,37 @@
+(define (f x y z . l) (...))
+
+#a
+(define (plus x y . l) 
+    (if (eq? '() l)
+        (+ x y)
+        (
+            (+ x y (sumList l))
+        )
+    )
+)
+
+(define (sumList l) 
+    (if (eq? '() l)
+        0
+        (+ (car l) (sumList (cdr l)))
+    )
+)
+
+#b
+(define (par x y . l) 
+    (if (eq? '() l)
+        (lambda (n) 
+            (list (x n) (y n))
+        )
+        (lambda (n) 
+            (flatten (list (x n) (y n) (mapForn l n)))
+        )
+    )
+)
+
+(define (mapForn l n)
+    (if (eq? '() l)
+        '()
+        (cons ((car l) n) (mapForn (cdr l) n))
+    )
+)
