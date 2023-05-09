@@ -1,11 +1,68 @@
+#append
 (define (append l m)
     (if (eq? null l)
-
+        m
+        (cons (car l) (append (cdr l) m))
     )
 )
 
-(define (append_helper l m acc)
+(append (list 1 4 6) (list 4 9 8))
+#'(1 4 6 4 9 8)
+
+#last
+(define (last l)
+    (if (eq? null (cdr l))
+        (car l)
+        (last (cdr l))
+    )
+)
+
+(last (list 4 7 9 12))
+#12
+
+#reverse
+(define (reverse l)
     (if (eq? null l)
-        
+        l
+        (append (reverse (cdr l)) (list (car l)))
     )
 )
+
+#delete
+(define (delete x l)
+    (cond
+        ((null? l) l)
+        ((equal? x (car l))) (cdr l))
+        (else (cons (car l) (delete x (cdr l))))
+    )
+)
+
+#pairing
+(define (pairing l1 l2)
+    (cond
+        ((and (null? l1) (null? l2)) '())
+        ((null? l1) (cons (cons (car l2) '()) (pairing l1 (cdr l2))) )
+        ((null? l2) (cons (cons (car l1) '()) (pairing (cdr l1) l2)) )
+        (else (cons (cons (car l1) (car l2)) (pairing (cdr l1) (cdr l2))) )
+    )
+)
+#(pairing (list 5 8 0) (list 4 7 8))
+#'((5 . 4) (8 . 7) (0 . 8))
+
+#(pairing (list 5 8 6 2) (list 4 7 8))
+#'((5 . 4) (8 . 7) (6 . 8) (2))
+
+#split
+(define (split x l)
+    (split-helper x l '() '())
+)
+
+(define (split-helper x l smaller larger)
+    (cond
+        ((null? l) (list smaller larger))
+        ((<= (car l) x) (split-helper x (cdr l) (cons (car l) smaller) larger))
+        (else  (split-helper x (cdr l) smaller (cons (car l)  larger)))
+    )
+)
+
+#(split 5 (list 2 1 4 5 8 9 0))

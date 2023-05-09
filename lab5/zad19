@@ -1,0 +1,57 @@
+(define tree '(1 (2 (4 () ()) (5 () ())) (3 () ())))
+; The tree looks like this:
+;        1
+;      /   \
+;     2     3
+;   /   \
+;  4     5
+
+
+(define (memberTree? element tree)
+  (cond
+    ((null? tree) #f)
+    ((equal? element (car tree)) #t)
+    ((memberTree? element (cadr tree)))
+    ((memberTree? element (caddr tree)))
+    (else #f)
+  )
+)
+
+(define (sumTree tree)
+    (cond
+        ((eq? '() tree) 0)
+        ((number? (car tree)) (+ (car tree) (sumTree (cadr tree)) (sumTree (caddr tree))))
+        (else (sumTree (cadr tree)) (sumTree (caddr tree)))
+    )
+)
+
+(define (inorder tree)
+  (cond
+    ((null? tree) '())
+    ((null? (cdr tree)) tree)
+    (else (append (inorder (cadr tree))
+                  (car tree)
+                  (inorder (caddr tree))))))
+
+(define (mapTree f tree)
+    (cond 
+        ((null? tree) '())
+        ((null? (cdr tree)) (f (car tree)))
+        (else
+            (list 
+                (f (car tree))
+                (mapTree f (cadr tree))
+                (mapTree f (caddr tree))
+            )
+        )
+    )
+)
+
+(define (square x) (* x x))
+
+
+
+
+
+
+

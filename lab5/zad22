@@ -1,0 +1,54 @@
+(define (prod l)
+    (foldr * 1 l)
+)
+
+(define (length l)
+    (foldr (lambda (acc x) (+ acc 1)) 0 l)
+)
+
+(define (delete x l)
+    (foldr (lambda (y acc) 
+        (if (equal? y x)
+            acc
+            (cons y acc)
+        )
+    ) '() l)
+)
+
+(define (reverse l)
+    (foldl (lambda (y acc) 
+        (cons y acc)
+    ) '() l)
+)
+
+(define (map f l)
+    (foldr (lambda (y acc) 
+        (cons (f y) acc)
+    ) '() l)
+)
+
+(define (filter pred l)
+    (foldr
+        (lambda (x acc)
+            (if (pred x)
+                (cons x acc)
+                acc
+            )
+        )
+        '()
+        l
+    )
+)
+
+(define (forall pred l)
+    (foldr
+        (lambda (x acc)
+            (if (pred x)
+                acc
+                #f
+            )
+        )
+        #t
+        l
+    )
+)

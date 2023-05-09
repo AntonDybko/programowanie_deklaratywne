@@ -1,0 +1,24 @@
+#a
+(define (square-list l)
+    (if (equal? null l)
+        l
+        (cons (square (car l)) (square-list (cdr l)))
+    )
+)
+
+#b
+(define (mapf f l)
+    (if (equal? null l)
+        l
+        (cons (f (car l)) (mapf f (cdr l)))
+    )
+)
+
+#c
+(define (filter pred l)
+    (cond
+        ((equal? null l) l)
+        ((pred (car l)) (cons (car l) (filter pred (cdr l))))
+        (else (filter pred (cdr l)))
+    )
+)

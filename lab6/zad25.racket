@@ -1,0 +1,37 @@
+(define (fibonacci n)
+    (fibonacci_helper (list (list 1 1) (list 1 0)) (- n 2))
+)
+
+(define (fibonacci_helper A n)
+    (cond
+        ((eq? n 0) (caar A))
+        (else
+            (fibonacci_helper (matrix-multi A (list (list 1 1) (list 1 0))) (- n 1))
+        )
+    )
+)
+
+(define (matrix-multi A B)
+    (list
+        (list 
+            (+ 
+                (* (caar A) (caar B)) 
+                (* (car (cdr (car A))) (caadr B))
+            )
+            (+ 
+                (* (caar A) (car (cdr (car B))))
+                (* (car (cdr (car A))) (cadr (cadr B)))
+            )
+        )
+        (list 
+            (+ 
+                (* (caadr A) (caar B) )
+                (* (cadr (cadr A)) (caar (cdr B)))
+            )
+            (+ 
+                (* (caadr A) (car (cdr (car B)))) 
+                (* (cadr (cadr A)) (cadr (cadr B)))
+            )
+        )
+    )
+)

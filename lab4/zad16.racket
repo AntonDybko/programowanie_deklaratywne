@@ -1,18 +1,21 @@
 (define (iter f n)
-    (if (> n 1)
-        (f (iter f (- n 1)))
-        (lambda (x) (f x))
+    (lambda (x)
+        (if (zero? n)
+            x
+            ((iter f (- n 1)) (f x))
+        )
     )
 )
 
-(define (iter_help f n x)
-    (if (> n 0)
-        (iter (lambda (x) (f x)) (- n 1))
-        (lambda (x) (f x))
-    )
-)
-#nie dziala
+(define (square n) (* n n))
+(define (double n) (* n 2))
 
-((iter square 3) 3)
-(square (square (lambda (3) (square 3))))
+((iter square 3) 5)
+
+
+#3 => ( lambda (x) ((iter f 2) (f x)) ) 
+#2 => (lambda (x) ((lambda (x) ((iter f 1) (f x))) (f x)))
+#1 => (lambda (x) ((lambda (x) ((lambda (x) ((iter f 0) (f x)))  (f x))) (f x)))
+#0 => (lambda (x) ((lambda (x) ((lambda (x) ((lambda (x) x)  (f x)))  (f x))) (f x)))
+
 

@@ -1,0 +1,17 @@
+(define (counting-version f)
+  (let ((count 0))
+    (lambda (x)
+      (cond ((eq? x 'how-often) count)
+            ((eq? x 'reset) (set! count 0))
+            (else (begin (set! count (+ count 1))
+                         (f x)))))))
+
+(define (square x)
+  (* x x))
+
+(define sq (counting-version square))
+(sq 5)          ; returns 25
+(sq 7)          ; returns 49
+(sq 'how-often) ; returns 2
+(sq 'reset)     ; returns 0
+(sq 'how-often) ; returns 0
