@@ -6,11 +6,8 @@ delete(X, [Y|T1], [Y|T2]) :- dif(X, Y), delete(X, T1, T2).
 delete(X, [X|T1], L2) :- delete(X, T1, L2).
 
 delete([],[]).
-delete([X, Y, Z | T], [X]) :- delete([Y, Z | T], []).
-delete([X, Y, Z | T], [X, Y]) :- delete([Y, Z | T], [Y]).
-delete([X, Y, Z | T], [X, Y, Z]) :- delete([Y, Z | T], [Y, Z]).
-delete([X, Y, Z | T], [X, Y, Z | T2]) :- delete([Y, Z | T], [Y, Z | T2]).
 delete([_, _, _], []) :- delete([], []).
+delete([X | T], [X | T2]) :- delete(T, T2).
 
 reverse_check_helper([], L2, L2).
 reverse_check_helper([X|Xs], Acc, L2) :-
