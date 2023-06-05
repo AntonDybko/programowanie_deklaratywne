@@ -28,9 +28,8 @@
 (define (inorder tree)
   (cond
     ((null? tree) '())
-    ((null? (cdr tree)) tree)
     (else (append (inorder (cadr tree))
-                  (car tree)
+                  (list (car tree))
                   (inorder (caddr tree))))))
 
 (define (mapTree f tree)

@@ -18,13 +18,11 @@
 )
 
 #b
-(define (par x y . l) 
+(define (par . l) 
     (if (eq? '() l)
+        '()
         (lambda (n) 
-            (list (x n) (y n))
-        )
-        (lambda (n) 
-            (flatten (list (x n) (y n) (mapForn l n)))
+            (mapForn l n)
         )
     )
 )

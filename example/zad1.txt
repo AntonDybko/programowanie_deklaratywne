@@ -1,0 +1,31 @@
+1.a
+(define (delete x l)
+    (cond 
+        ((null? l) l)
+        ((eq? (car l) x) (cdr l))
+        (else (cons (car l) (delete x (cdr l))))
+    )
+)
+1.b
+(define (count x l)
+    (cond
+        ((null? l) 0)
+        ((eq? (car l) x) (+ 1 (count x (cdr l))))
+        (else (count x (cdr l)))
+    )
+)
+2.a
+(define (filter pred l)
+    (cond
+        ((null? l) l)
+        ((pred (car l)) (cons (car l) (filter pred (cdr l))))
+        (else (filter pred (cdr l)))
+    )
+)
+2.b
+(define (inorder tree)
+  (cond
+    ((null? tree) tree)
+    (else (append (inorder (cadr tree))
+                  (car tree)
+                  (inorder (caddr tree))))))

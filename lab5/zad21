@@ -1,21 +1,24 @@
 (define (eval expression values)
-  (cond ((eq? (car expression) 'and) (and-expr? (cdr expression) values))
-        ((eq? (car expression) 'or) (or-expr? (cdr expression) values))
-        ((eq? (car expression) 'not) (not-expr? (cadr expression) values))
-        (else (assoc-value (car expression) values))))
-
-(define (and-expr? exprs values)
-  (cond ((null? exprs) #t)
-        ((eval (car exprs) values) (and-expr? (cdr exprs) values))
-        (else #f)))
-
-(define (or-expr? exprs values)
-  (cond ((null? exprs) #f)
-        ((eval (car exprs) values) #t)
-        (else (or-expr? (cdr exprs) values))))
-
-(define (not-expr? expr values)
-  (not (eval expr values)))
+  (cond ((null? expression) #t) ; Empty expression is true
+        ((boolean? expression) expression) ; Boolean constant
+        ((not (pair? expression)) (assoc-value expression values)) ; Variable lookup
+        ((eq? (car expression) 'and) (and-expr? (cdr expression) values)) ; AND expression
+        ((eq? (car expression) 'or) (or-expr? (cdr expression) values)) ; OR expression
+        ((eq? (car expression) 'not) (not-expr? (cadr expression) values)) ; NOT expression
+        (else #f))) ; Unknown expression type
 
 (define (assoc-value variable values)
   (cdr (assoc variable values)))
+
+(define (and-expr? exprs values)
+  (cond ((null? exprs) #t) ; Empty AND expression is true
+        ((eval (car exprs) values) (and-expr? (cdr exprs) values)) ; Evaluate subexpression and continue
+        (else #f))) ; One subexpression is false, so entire expression is false
+
+(define (or-expr? exprs values)
+  (cond ((null? exprs) #f) ; Empty OR expression is false
+        ((eval (car exprs) values) #t) ; Evaluate subexpression, if true, entire expression is true
+        (else (or-expr? (cdr exprs) values)))) ; Continue evaluating remaining subexpressions
+
+(define (not-expr? expr values)
+  (not (eval expr values))) ; Negate the evaluated subexpression
